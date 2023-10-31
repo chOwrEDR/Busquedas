@@ -1,0 +1,42 @@
+#include <queue>
+#include <string>
+#include <iostream>
+
+struct Alumno {
+    std::string nombre;
+    std::string carrera;
+    int materias_aprobadas;
+    float promedio;
+};
+
+std::queue<Alumno> solicitudes;
+
+void alta_solicitud(Alumno alumno) {
+    solicitudes.push(alumno);
+}
+
+void elaborar_constancia() {
+    if (!solicitudes.empty()) {
+        Alumno alumno = solicitudes.front();
+        solicitudes.pop();
+        std::cout << "Constancia elaborada para: " << alumno.nombre << std::endl;
+    } else {
+        std::cout << "No hay solicitudes pendientes." << std::endl;
+    }
+}
+
+void buscar_solicitud(std::string nombre) {
+    int posicion = 0;
+    std::queue<Alumno> copia = solicitudes;
+
+    while (!copia.empty()) {
+        if (copia.front().nombre == nombre) {
+            std::cout << "La solicitud de " << nombre << " se encuentra en la posición: " << posicion << std::endl;
+            return;
+        }
+        copia.pop();
+        posicion++;
+    }
+
+    std::cout << "No se encontró la solicitud de " << nombre << "." << std::endl;
+}
